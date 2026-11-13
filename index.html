@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مترجم النصوص الذكي الفوري</title>
+    <style>
+        :root {
+            --primary-color: #0f172a;
+            --accent-color: #2563eb;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #334155;
+            --border-color: #cbd5e1;
+            --danger-color: #dc2626;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: var(--primary-color);
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+            resize: vertical;
+            min-height: 130px;
+        }
+
+        textarea:focus {
+            border-color: var(--accent-color);
+        }
+
+        /* نافذة إظهار الترجمة (اتجاهها LTR لأنها بالإنكليزية) */
+        .output-box {
+            width: 100%;
+            padding: 12px;
+            border: 1px dashed var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            min-height: 130px;
+            background-color: #f8fafc;
+            direction: ltr;
+            text-align: left;
+            color: #1e293b;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            flex: 1;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-clear {
+            background-color: var(--danger-color);
+        }
+        .btn-clear:hover {
+            background-color: #b91c1c;
+        }
+
+        .btn-secondary {
+            background-color: #475569;
+        }
+        .btn-secondary:hover {
+            background-color: #334155;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>مترجم النصوص الفوري</h1>
+        <p>اكتب أو ألصق النص بالعربية لتحويله وعرضه باللغة الإنجليزية فوراً</p>
+    </header>
+
+    <div class="container">
+        <!-- نافذة إدخال النص -->
+        <div class="form-group">
+            <label for="inputText">النص المراد ترجمته (عربي):</label>
+            <textarea id="inputText" placeholder="اكتب النص هنا..." oninput="translateText()"></textarea>
+        </div>
+
+        <!-- نافذة إظهار الترجمة الإنجليزية -->
+        <div class="form-group">
+            <label for="outputText" style="direction: rtl;">الترجمة الإنجليزية:</label>
+            <div id="outputText" class="output-box" placeholder="ستظهر الترجمة هنا..."></div>
+        </div>
+
+        <!-- أزرار التحكم -->
+        <div class="btn-container">
+            <button class="btn btn-secondary" onclick="copyTranslatedText()">📋 نسخ الترجمة</button>
+            <button class="btn btn-clear" onclick="clearFields()">🗑️ مسح للبدء من جديد</button>
+        </div>
+    </div>
+
+    <script>
+        // دالة ترجمة بسيطة وخفيفة (يمكن ربطها بمحرك ترجمة أو الاعتماد على معالجة فورية)
+        function translateText() {
+            const input = document.getElementById('inputText').value.trim();
+            const outputBox = document.getElementById('outputText');
+
+            if (!input) {
+                outputBox.innerText = "";
+                return;
+            }
+
+            // محاكاة الترجمة الفورية أو دمج قاموس مبدئي خفيف
+            // ملاحظة: لترجمة حقيقية واسعة النطاق يمكن دمج واجهة برمجية أو تركيز المعالجة هنا
+            // كمثال توضيحي سريع وخفيف client-side:
+            outputBox.innerText = "English Translation for: " + input;
+        }
+
+        function copyTranslatedText() {
+            const textToCopy = document.getElementById('outputText').innerText;
+            if (!textToCopy) {
+                alert('لا يوجد نص لنسخه!');
+                return;
+            }
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert('تم نسخ الترجمة بنجاح!');
+            }).catch(err => {
+                alert('فشل النسخ.');
+            });
+        }
+
+        function clearFields() {
+            document.getElementById('inputText').value = "";
+            document.getElementById('outputText').innerText = "";
+            document.getElementById('inputText').focus();
+        }
+    </script>
+</body>
+</html>
